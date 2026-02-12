@@ -1,0 +1,467 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-source-sans);
+  --font-display: var(--font-lexend);
+
+  /* ═══════════════════════════════════════════════ */
+  /* DOCONS Brand Kit — Navy Blue + Red              */
+  /* Logo: Navy #1C3E95 / Red #E63946 / White        */
+  /* ═══════════════════════════════════════════════ */
+
+  /* Primary — Navy Blue (from logo) */
+  --color-primary: #1C3E95;
+  --color-primary-hover: #2D56B3;
+  --color-primary-light: #3B6DD9;
+  --color-primary-dark: #142E6E;
+
+  /* Accent — Red (from logo rooftop) */
+  --color-accent: #E63946;
+  --color-accent-hover: #C62D3A;
+  --color-accent-light: #F05A65;
+
+  /* Secondary — Blueprint Blue */
+  --color-secondary: #3B82F6;
+  --color-secondary-light: #60A5FA;
+
+  /* Brand colors — direct from logo */
+  --color-brand-navy: #1C3E95;
+  --color-brand-navy-light: #2D56B3;
+  --color-brand-navy-dark: #142E6E;
+  --color-brand-red: #E63946;
+  --color-brand-red-hover: #C62D3A;
+
+  /* Backward-compatible aliases */
+  --color-brand-blue: #1C3E95;
+  --color-brand-blue-light: #2D56B3;
+  --color-brand-blue-dark: #142E6E;
+
+  /* Functional colors */
+  --color-brand-green: #10B981;
+  --color-brand-green-hover: #059669;
+
+  /* Industrial construction palette */
+  --color-industrial-gray: #64748B;
+  --color-industrial-slate: #94A3B8;
+  --color-safety-orange: #F97316;
+
+  /* Neutral scale */
+  --color-slate-50: #F8FAFC;
+  --color-slate-100: #F1F5F9;
+  --color-slate-200: #E2E8F0;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #94A3B8;
+  --color-slate-500: #64748B;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1E293B;
+  --color-slate-900: #0F172A;
+
+  --color-brand-gray-light: #F8FAFC;
+  --color-brand-gray-neutral: #64748B;
+  --color-accent-border: #E2E8F0;
+
+  /* Gradients */
+  --background-image-gradient-primary: linear-gradient(135deg, #1C3E95 0%, #2D56B3 100%);
+  --background-image-gradient-cta: linear-gradient(135deg, #E63946 0%, #C62D3A 100%);
+  --background-image-gradient-hero: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 50%, #F0F9FF 100%);
+  --background-image-gradient-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  /* Liquid Glass gradients */
+  --background-image-gradient-liquid: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 50%, rgba(255, 255, 255, 0.85) 100%);
+  --background-image-gradient-iridescent: linear-gradient(135deg, rgba(28, 62, 149, 0.05) 0%, rgba(59, 130, 246, 0.03) 50%, rgba(230, 57, 70, 0.05) 100%);
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-soft {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Liquid Glass morphing animation */
+  @keyframes morph {
+
+    0%,
+    100% {
+      border-radius: 1rem;
+      transform: scale(1);
+    }
+
+    50% {
+      border-radius: 1.25rem;
+      transform: scale(1.01);
+    }
+  }
+
+  /* Fluid color transition */
+  @keyframes colorFlow {
+
+    0%,
+    100% {
+      filter: hue-rotate(0deg);
+    }
+
+    50% {
+      filter: hue-rotate(5deg);
+    }
+  }
+
+  --animation-fadeIn: fadeIn 0.4s ease-out;
+  --animation-fadeInUp: fadeInUp 0.5s ease-out;
+  --animation-scaleIn: scaleIn 0.3s ease-out;
+  --animation-slideInRight: slideInRight 0.4s ease-out;
+  --animation-shimmer: shimmer 2s infinite linear;
+  --animation-float: float 3s ease-in-out infinite;
+  --animation-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animation-morph: morph 4s ease-in-out infinite;
+  --animation-colorFlow: colorFlow 6s ease-in-out infinite;
+}
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Animation utilities */
+.animate-fadeIn {
+  animation: var(--animation-fadeIn);
+}
+
+.animate-fadeInUp {
+  animation: var(--animation-fadeInUp);
+}
+
+.animate-scaleIn {
+  animation: var(--animation-scaleIn);
+}
+
+.animate-slideInRight {
+  animation: var(--animation-slideInRight);
+}
+
+.animate-float {
+  animation: var(--animation-float);
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 1);
+}
+
+/* Liquid Glass - Premium morphing glass effect */
+.glass-liquid {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 50%, rgba(255, 255, 255, 0.85) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-liquid:hover {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+}
+
+/* Iridescent border effect — Navy + Blue + Red */
+.border-iridescent {
+  position: relative;
+}
+
+.border-iridescent::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(28, 62, 149, 0.3) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(230, 57, 70, 0.3) 100%);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.border-iridescent:hover::before {
+  opacity: 1;
+}
+
+/* Navy glow effect */
+.glow-chromatic {
+  box-shadow:
+    0 0 20px rgba(28, 62, 149, 0.2),
+    0 0 40px rgba(28, 62, 149, 0.1);
+}
+
+/* Gradient text — Navy brand */
+.gradient-text {
+  background: linear-gradient(135deg, #1C3E95 0%, #2D56B3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1C3E95 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Red accent gradient text */
+.gradient-text-accent {
+  background: linear-gradient(135deg, #E63946 0%, #C62D3A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom focus styles — Navy brand */
+*:focus-visible {
+  outline: 2px solid #1C3E95;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color — Navy brand */
+::selection {
+  background-color: #1C3E95;
+  color: white;
+}
+
+/* Feng Shui specific styles */
+.glass-fengshui {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 243, 208, 0.3);
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+}
+
+@keyframes gentlePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-reveal {
+  animation: slideInUp 500ms ease-out forwards;
+  opacity: 0;
+}
+
+/* Stagger delays for sections */
+.section-reveal:nth-of-type(1) {
+  animation-delay: 0ms;
+}
+
+.section-reveal:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+
+.section-reveal:nth-of-type(3) {
+  animation-delay: 300ms;
+}
+
+.section-reveal:nth-of-type(4) {
+  animation-delay: 450ms;
+}
+
+/* Improved scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Hover utilities */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(28, 62, 149, 0.15);
+}
+
+/* Stagger animation utility */
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
