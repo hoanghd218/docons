@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback } from 'react';
-import { DesignStyle, BudgetRange, Lead, STYLES, BUDGETS } from '@/data/interior-design';
+import { DesignStyle, BudgetRange, Lead, STYLES } from '@/data/interior-design';
 import { generateInteriorDesigns, editInteriorDesign } from '@/services/gemini-interior';
 import LeadForm from './LeadForm';
 
@@ -169,7 +169,7 @@ const DesignFlow: React.FC<DesignFlowProps> = ({ onComplete }) => {
     }, []);
 
     const executeGeneration = async (currentUserInfo: UserInfo) => {
-        if (!image || selectedStyles.length === 0 || !selectedBudget) return;
+        if (!image || selectedStyles.length === 0) return;
         if (!checkAndConsumeRender()) return;
 
         setIsGenerating(true);
@@ -181,7 +181,7 @@ const DesignFlow: React.FC<DesignFlowProps> = ({ onComplete }) => {
         }, 100);
 
         try {
-            const results = await generateInteriorDesigns(image, selectedStyles, selectedBudget);
+            const results = await generateInteriorDesigns(image, selectedStyles, selectedBudget!);
             setGeneratedImages(results);
             if (results.length > 0) {
                 setHasResults(true);
@@ -196,11 +196,61 @@ const DesignFlow: React.FC<DesignFlowProps> = ({ onComplete }) => {
         }
     };
 
-    const handleUserRegister = (name: string, phone: string, email: string) => {
+    const handleUserRegister = (name: string, phone: string, email: string, budget: BudgetRange, location: string) => {
         const newUser = { name, phone, email };
         setUserInfo(newUser);
+        setSelectedBudget(budget);
         setShowRegisterModal(false);
-        executeGeneration(newUser);
+
+        // Need to pass budget directly since setState is async
+        const runGeneration = async () => {
+            if (!image || selectedStyles.length === 0) return;
+            if (!checkAndConsumeRender()) return;
+
+            setIsGenerating(true);
+            setHasResults(false);
+            setIsEditing(false);
+
+            setTimeout(() => {
+                resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+
+            try {
+                const results = await generateInteriorDesigns(image, selectedStyles, budget);
+                setGeneratedImages(results);
+                if (results.length > 0) {
+                    setHasResults(true);
+                } else {
+                    alert("Không thể tạo hình ảnh. Vui lòng thử lại.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Đã xảy ra lỗi khi kết nối với AI.");
+            } finally {
+                setIsGenerating(false);
+            }
+        };
+        runGeneration();
+
+        // Fire-and-forget: save lead to n8n webhook (non-blocking)
+        (async () => {
+            try {
+                await fetch('https://n8n.bimspeed.net/webhook/8539071e-0b28-4e4b-8dc5-b393c83050f6', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fullName: name,
+                        phone,
+                        email,
+                        budget,
+                        location,
+                        date: new Date().toISOString(),
+                    }),
+                });
+            } catch (err) {
+                console.error('Lead webhook error:', err);
+            }
+        })();
     };
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -234,7 +284,7 @@ const DesignFlow: React.FC<DesignFlowProps> = ({ onComplete }) => {
     };
 
     const handleGenerateClick = () => {
-        if (!image || selectedStyles.length === 0 || !selectedBudget) return;
+        if (!image || selectedStyles.length === 0) return;
 
         if (!userInfo) {
             setShowRegisterModal(true);
@@ -558,37 +608,15 @@ const DesignFlow: React.FC<DesignFlowProps> = ({ onComplete }) => {
                             </div>
                         </div>
 
-                        <div className="mb-8">
-                            <h3 className="text-xl font-bold text-slate-900 mb-5 font-display flex items-center gap-2">
-                                <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary font-bold">3</span>
-                                Ngân sách
-                            </h3>
-                            <div className="grid grid-cols-2 gap-3">
-                                {BUDGETS.map((budget) => (
-                                    <div
-                                        key={budget}
-                                        onClick={() => setSelectedBudget(budget)}
-                                        className={`
-                                            px-4 py-3 rounded-xl border cursor-pointer font-medium text-sm text-center transition-all hover:scale-[1.02] active:scale-[0.98]
-                                            ${selectedBudget === budget
-                                                ? 'border-primary bg-gradient-to-br from-primary/5 to-primary/10 text-primary font-semibold'
-                                                : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200 hover:bg-slate-50'
-                                            }
-                                        `}
-                                    >
-                                        {budget}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+
 
                         <div className="mt-auto pt-6 border-t border-slate-100">
                             <button
                                 onClick={handleGenerateClick}
-                                disabled={!image || selectedStyles.length === 0 || !selectedBudget || isGenerating}
+                                disabled={!image || selectedStyles.length === 0 || isGenerating}
                                 className={`
                                     w-full py-4 rounded-xl font-bold text-lg shadow-xl transition-all flex items-center justify-center gap-2
-                                    ${(!image || selectedStyles.length === 0 || !selectedBudget || isGenerating)
+                                    ${(!image || selectedStyles.length === 0 || isGenerating)
                                         ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                         : 'bg-gradient-to-r from-primary to-primary-hover text-white shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0'
                                     }

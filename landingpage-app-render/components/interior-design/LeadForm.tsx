@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
+import { BudgetRange, BUDGETS } from '@/data/interior-design';
 
 interface LeadFormProps {
-    onSubmit: (name: string, phone: string, email: string) => void;
+    onSubmit: (name: string, phone: string, email: string, budget: BudgetRange, location: string) => void;
     isLoading: boolean;
     title?: string;
     description?: string;
@@ -20,11 +21,13 @@ const LeadForm: React.FC<LeadFormProps> = ({
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [budget, setBudget] = useState<BudgetRange | ''>('');
+    const [location, setLocation] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (name && phone && email) {
-            onSubmit(name, phone, email);
+        if (name && phone && email && budget && location) {
+            onSubmit(name, phone, email, budget as BudgetRange, location);
         }
     };
 
@@ -77,10 +80,41 @@ const LeadForm: React.FC<LeadFormProps> = ({
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
+                <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">Địa điểm thi công</label>
+                    <input
+                        type="text"
+                        required
+                        className="w-full h-12 px-4 rounded-xl border-2 border-slate-300 hover:border-primary/50 focus:ring-4 focus:ring-primary/10 focus:border-primary focus:outline-none transition-all duration-200 bg-white cursor-pointer"
+                        placeholder="Ví dụ: Quận 7, TP.HCM"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">Ngân sách dự kiến</label>
+                    <div className="grid grid-cols-2 gap-2">
+                        {BUDGETS.map((b) => (
+                            <div
+                                key={b}
+                                onClick={() => setBudget(b)}
+                                className={`
+                                    px-4 py-3 rounded-xl border cursor-pointer font-medium text-sm text-center transition-all hover:scale-[1.02] active:scale-[0.98]
+                                    ${budget === b
+                                        ? 'border-primary bg-gradient-to-br from-primary/5 to-primary/10 text-primary font-semibold shadow-md'
+                                        : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50'
+                                    }
+                                `}
+                            >
+                                {b}
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={isLoading || !name || !phone || !email || !budget || !location}
                     className="w-full h-13 bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-brand-blue-dark text-white font-semibold rounded-xl shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 mt-8 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer active:scale-95"
                 >
                     {isLoading ? (

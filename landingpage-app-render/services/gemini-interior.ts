@@ -6,7 +6,6 @@ import { DesignStyle, BudgetRange } from "@/data/interior-design";
 const getClient = () => {
     let apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
 
-    apiKey = "AIzaSyCIBQhBhHd5hRw_wrCLS9R2YNZ7K3aNmuI"
 
 
     if (!apiKey) {
@@ -27,6 +26,8 @@ export const generateInteriorDesigns = async (
     styles: DesignStyle[],
     budget: BudgetRange
 ): Promise<string[]> => {
+
+    console.log("aaaaa")
     const ai = getClient();
     const model = 'gemini-2.5-flash-image';
 

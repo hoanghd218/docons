@@ -55,11 +55,7 @@ export default function Header() {
                         </nav>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <button className="px-5 py-2.5 text-sm font-semibold text-primary bg-gradient-to-r from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/15 border border-primary/30 hover:border-primary/50 rounded-xl transition-all duration-200 hover:shadow-md hover:shadow-primary/20 hover:scale-105 active:scale-95 cursor-pointer">
-                            Đăng nhập
-                        </button>
-                    </div>
+
                 </div>
             </div>
         </header>
